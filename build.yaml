@@ -1,0 +1,31 @@
+targets:
+  $default:
+    # build_runner
+    sources:
+      # Note that it is important to include these in the default target.
+      - pubspec.*
+      - $package$
+      - lib/$lib$
+      - lib/**
+      # additional sources
+      - integration_test/**.dart
+      - test/**
+    #      - graphql/**
+
+    builders:
+      source_gen:combining_builder:
+        options:
+          preamble: |
+            // coverage:ignore-file
+      mockito|mockBuilder:
+        generate_for:
+          - test/**.dart
+          - integration_test/**.dart
+      freezed:
+        options:
+          union_key: __typename
+          union_value_case: pascal
+
+      json_serializable:
+        options:
+          explicit_to_json: true
