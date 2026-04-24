@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_showcase/core/core.dart';
+import 'package:flutter_showcase/core/extensions/extensions.dart';
+import 'package:flutter_showcase/features/sign_in/sign_in.dart';
+import 'package:flutter_showcase/injection.dart';
+import 'package:go_router/go_router.dart';
+
+part 'sign_in_page.app_bar.dart';
+part 'sign_in_page.bottom.dart';
+part 'sign_in_page.content.dart';
+
+/// The SignIn page of the app.
+class SignInPage extends StatelessWidget {
+  /// constructor
+  const SignInPage({super.key});
+
+  /// on login state changed
+  void onLoginStateChanged(BuildContext context, SignInState state) {
+    if (state.result != null && state.result!.isRight()) {
+      context.read<AuthCubit>().signInSuccess();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<SignInCubit>(),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<SignInCubit, SignInState>(
+            listenWhen: (previous, current) => previous.result != current.result,
+            listener: onLoginStateChanged,
+            child: const Scaffold(
+              appBar: SignInPageAppBar(),
+              body: SafeArea(child: SignInPageContent()),
+              bottomNavigationBar: SignInPageBottomNav(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

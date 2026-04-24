@@ -12,11 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # authentication
+  google_sign_in: ^7.2.0
+
   # caching
   shared_preferences: ^2.5.5
-
-  # database
-  supabase_flutter: ^2.12.4
 
   # DI
   get_it: ^9.2.1
@@ -32,7 +32,6 @@ dependencies:
   slang: ^4.14.0
   slang_flutter: ^4.14.0
 
-
   # network
   dio: ^5.9.2
   internet_connection_checker_plus: ^2.9.1+2
@@ -45,6 +44,9 @@ dependencies:
 
   # state management
   flutter_bloc: ^9.1.1
+
+  # supabase
+  supabase_flutter: ^2.12.4
 
   # UI
   cupertino_icons: ^1.0.9
@@ -59,6 +61,7 @@ dependencies:
   freezed_annotation: ^3.1.0
   logger: ^2.7.0
   package_info_plus: ^10.1.0
+  uuid: ^4.5.3
 
 dev_dependencies:
   # code analyzers
@@ -70,6 +73,7 @@ dev_dependencies:
   freezed: ^3.2.5
   injectable_generator: ^3.0.2
   json_serializable: ^6.13.1
+  go_router_builder: ^4.3.0
 
   # testing
   flutter_test:
