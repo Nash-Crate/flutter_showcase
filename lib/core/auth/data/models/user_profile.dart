@@ -1,4 +1,4 @@
-import 'package:flutter_showcase/features/sign_in/sign_in.dart';
+import 'package:flutter_showcase/core/auth/core/core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_profile.freezed.dart';
@@ -18,6 +18,14 @@ abstract class UserProfileModel with _$UserProfileModel {
 
   /// Factory method to create a [UserProfileModel] instance from a JSON map.
   factory UserProfileModel.fromJson(Map<String, dynamic> json) => _$UserProfileModelFromJson(json);
+
+  /// Factory method to create a [UserProfileModel] instance from a [UserProfile] domain entity.
+  factory UserProfileModel.fromDomain(UserProfile profile) {
+    return UserProfileModel(
+      id: profile.id,
+      name: profile.name,
+    );
+  }
 
   /// Converts this [UserProfileModel] instance to a [UserProfile] domain entity.
   UserProfile toDomain() {

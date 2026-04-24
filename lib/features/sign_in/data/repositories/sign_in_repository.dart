@@ -30,14 +30,4 @@ class SignInRepository implements ISignInRepository {
   AsyncFailT<Unit> signOut() {
     return _datasource.signOut();
   }
-
-  @override
-  AsyncFailT<List<UserProfile>> getUserProfiles() {
-    return _datasource.getUserProfiles();
-  }
-
-  @override
-  AsyncFailT<UserProfile> getLastUsedUserProfile() {
-    return _datasource.getLastUsedUserProfile();
-  }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_showcase/core/auth/core/core.dart';
 import 'package:flutter_showcase/core/extensions/extensions.dart';
 import 'package:flutter_showcase/features/sign_in/sign_in.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,19 +15,14 @@ part 'auth_cubit.freezed.dart';
 @singleton
 class AuthCubit extends Cubit<AuthState> {
   /// constructor
-  AuthCubit(
-    this._checkAuth,
-    this._signOutUser,
-    this._getLastUsedUserProfile,
-    this._getUserProfiles,
-  ) : super(const Processing()) {
+  AuthCubit(this._checkAuth, this._signOutUser, this._getLastUsedUserProfile)
+    : super(const Processing()) {
     unawaited(checkAuth());
   }
 
   final CheckAuth _checkAuth;
   final SignOutUser _signOutUser;
   final GetLastUsedUserProfile _getLastUsedUserProfile;
-  final GetUserProfiles _getUserProfiles;
 
   /// Checks the authentication status of the user.
   Future<void> checkAuth() async {
@@ -44,22 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
       return emit(const Unauthenticated());
     }
 
-    return emit(Authenticated1(profileRes.asR));
-  }
-
-  /// Fetches the user profiles.
-  Future<void> getUserProfiles() async {
-    if (state is! PartiallyAuthenticated) return;
-
-    emit(const PartiallyAuthenticated(isProcessing: true, profiles: null));
-
-    final res = await _getUserProfiles();
-    if (res.isLeft()) {
-      addError(res.asL);
-      return emit(const Unauthenticated());
-    }
-
-    return emit(PartiallyAuthenticated(isProcessing: false, profiles: res.asR));
+    return emit(Authenticated(userProfile: profileRes.asR));
   }
 
   /// Sign out the user.
@@ -72,14 +53,21 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const Unauthenticated());
   }
 
-  /// Called when the user has successfully signed in.
-  void signInSuccess() {
-    emit(const PartiallyAuthenticated(isProcessing: false, profiles: null));
+  /// Sets the user profile in the state.
+  void setUserProfile(UserProfile userProfile) {
+    if (state is! Authenticated) {
+      addError('Cannot set user profile when not authenticated');
+      return;
+    }
 
-    // Fetch user profiles after successful sign-in.
-    unawaited(getUserProfiles());
+    emit(Authenticated(userProfile: userProfile));
   }
 
-  /// Selects a user profile.
-  void selectProfile(UserProfile profile) => emit(Authenticated1(profile));
+  // /// Called when the user has successfully signed in.
+  // void signInSuccess() {
+  //   emit(const PartiallyAuthenticated(isProcessing: false));
+
+  //   // Fetch user profiles after successful sign-in.
+  //   unawaited(getUserProfiles());
+  // }
 }
