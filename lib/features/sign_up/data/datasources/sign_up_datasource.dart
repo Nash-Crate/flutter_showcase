@@ -19,13 +19,11 @@ class SignUpDatasourceImpl implements SignUpDatasource {
   AsyncFailT<Unit> signUpWithEmailAndPassword(EmailSignUpDto dto) async {
     try {
       // create authentication record
-      final a = await _supabaseClient.auth.signUp(
+      await _supabaseClient.auth.signUp(
         email: dto.email,
         password: dto.password,
         // pass the name as user metadata for the profile record
-        data: {
-          'name': dto.name,
-        },
+        data: {'name': dto.name},
       );
 
       return const Right(unit);
