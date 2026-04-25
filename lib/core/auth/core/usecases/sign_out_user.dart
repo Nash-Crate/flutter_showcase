@@ -1,5 +1,4 @@
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/features/sign_in/sign_in.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,7 +8,7 @@ class SignOutUser implements UsecaseNoParams<Unit> {
   /// constructor
   const SignOutUser(this._repository);
 
-  final ISignInRepository _repository;
+  final IAuthRepository _repository;
 
   @override
   AsyncFailT<Unit> call() {

@@ -9,10 +9,4 @@ mixin ISignInRepository {
 
   /// Sign in with Google
   AsyncFailT<Unit> signInWithGoogle();
-
-  /// Check authentication status
-  AsyncFailT<Unit> checkAuth();
-
-  /// Sign out
-  AsyncFailT<Unit> signOut();
 }
