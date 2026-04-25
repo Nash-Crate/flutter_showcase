@@ -50,5 +50,12 @@ open_pattern = "$EDITOR $FILE:$LINE"
 # sdk_path = "/path/to/flutter"
 
 [dap]
+enabled = true
 port = 4711
-auto_configure_ide = false
+auto_configure_ide = true
+
+[native_logs]
+enabled = false            # Enable / disable native log capture
+min_level = "debug"       # Minimum log level: debug, info, warn, error
+buffer_size = 1000        # Ring buffer size per session
+exclude_tags = ["flutter"] # Tags to always exclude

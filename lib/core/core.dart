@@ -1,5 +1,6 @@
 //GENERATED BARREL FILE
 export './auth/auth.dart';
+export './domain/domain.dart';
 export './errors/errors.dart';
 export './network/network.dart';
 export './routing/routing.dart';

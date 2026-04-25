@@ -11,6 +11,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.transparent,
       title: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           final user = (state as Authenticated).userProfile!;
