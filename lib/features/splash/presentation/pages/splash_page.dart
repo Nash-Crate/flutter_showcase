@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/logger.dart';
 import 'package:go_router/go_router.dart';
 
 /// A page that displays a splash screen.
@@ -38,9 +37,6 @@ class _SplashPageState extends State<SplashPage> {
         final intendedPath = intended != null ? Uri.decodeComponent(intended) : null;
 
         if (authState is Authenticated) {
-          logger.d('User is authenticated: ${authState.userProfile}');
-
-          // if the user is authenticated and has selected a profile, navigate to the home page
           // stop the checker loop
           flag = false;
 

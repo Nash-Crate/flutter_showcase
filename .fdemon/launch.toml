@@ -1,0 +1,9 @@
+# .fdemon/launch.toml - Configuration file for Flutter Demon
+[[configurations]]
+name = "Flutter Showcase"
+device = "auto"              # "auto" or specific device ID
+mode = "debug"               # debug, profile, or release
+# flavor = "development"       # optional
+entry_point = "lib/main.dart"  # optional
+extra_args = ["--dart-define-from-file=configs/dev.json"]
+auto_start = true            # optional, default false

@@ -1,2 +1,3 @@
 //GENERATED BARREL FILE 
-export './pages/home_page.dart'; 
+export './blocs/blocs.dart';
+export './pages/home_page.dart';

@@ -25,9 +25,6 @@ extension NullableStringFieldValidations on String? {
     return this != null && this!.isNotEmpty && this!.characters.length > 2;
   }
 
-  /// Checks if the nullable string is valid by ensuring it is either null or a non-empty string.
-  bool get isValidId => this?.isValidString ?? false;
-
   /// Check if the String has characters at least the amount given in [minChars]
   /// default [minChars] is 2
   bool isValid({int minChars = 2}) => (this?.characters.length ?? 0) >= minChars;

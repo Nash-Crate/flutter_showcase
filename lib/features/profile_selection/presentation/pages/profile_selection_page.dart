@@ -31,10 +31,11 @@ class ProfileSelectionPage extends StatelessWidget {
                 tileColor: Colors.grey,
                 title: Text(profile.name),
                 onTap: () async {
-                  // unawaited(context.read<HomeCubit>().fetchRecentWatchHistory());
-                  // unawaited(context.read<DiscoveryCubit>().fetchDiscoveries());
-
+                  // Set the selected profile in the AuthCubit and ProfileSelectionCubit
+                  context.read<AuthCubit>().setActiveProfile(profile);
+                  // Notify the ProfileSelectionCubit about the selected profile.
                   unawaited(context.read<ProfileSelectionCubit>().selectProfile(profile));
+
                   HomeRoute().pushReplacement(context);
                 },
               );

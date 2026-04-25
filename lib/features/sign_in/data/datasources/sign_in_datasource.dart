@@ -44,6 +44,7 @@ class SignInDatasourceImpl implements SignInDatasource {
   AsyncFailT<Unit> signOut() async {
     try {
       await _supabaseClient.auth.signOut();
+      await _cacheStorage.clear();
 
       return const Right(unit);
     } on Exception catch (e) {

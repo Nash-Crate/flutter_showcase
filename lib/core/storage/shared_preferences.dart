@@ -39,4 +39,10 @@ class SharedPreferencesImpl implements ICacheStorage {
 
     return _prefs.setString(key, data is String ? data : data.toString());
   }
+
+  @override
+  Future<void> clear() async {
+    final res = await _prefs.clear();
+    if (!res) throw Exception('Failed to clear cache');
+  }
 }

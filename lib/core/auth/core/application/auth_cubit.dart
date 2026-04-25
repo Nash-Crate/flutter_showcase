@@ -63,11 +63,18 @@ class AuthCubit extends Cubit<AuthState> {
     emit(Authenticated(userProfile: userProfile));
   }
 
-  // /// Called when the user has successfully signed in.
-  // void signInSuccess() {
-  //   emit(const PartiallyAuthenticated(isProcessing: false));
+  /// Called when the user has successfully signed in.
+  void signInSuccess() {
+    emit(const Authenticated());
+  }
 
-  //   // Fetch user profiles after successful sign-in.
-  //   unawaited(getUserProfiles());
-  // }
+  /// Sets the active profile for the user.
+  void setActiveProfile(UserProfile profile) {
+    if (state is! Authenticated) {
+      addError('Cannot set active profile when not authenticated');
+      return;
+    }
+
+    emit(Authenticated(userProfile: profile));
+  }
 }

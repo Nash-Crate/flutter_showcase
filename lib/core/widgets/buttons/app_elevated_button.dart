@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class AppElevatedButton extends StatelessWidget {
   /// Creates an elevated button with default properties.
   const AppElevatedButton({
-    required this.isLoading,
-    required this.label,
+    required this.child,
     super.key,
+    this.isLoading = false,
     this.onPressed,
   });
 
-  /// label of the button
-  final String label;
+  /// child of the button
+  final Widget child;
 
   /// Callback function when the button is pressed
   final VoidCallback? onPressed;
@@ -25,7 +25,7 @@ class AppElevatedButton extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: isLoading ? null : onPressed,
-          child: Text(label),
+          child: child,
         ),
 
         if (isLoading)

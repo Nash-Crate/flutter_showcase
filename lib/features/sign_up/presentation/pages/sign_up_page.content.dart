@@ -105,9 +105,9 @@ class _SignUpPageContentState extends State<SignUpPageContent> {
               buildWhen: (previous, current) => previous.isProcessing != current.isProcessing,
               builder: (context, state) {
                 return AppElevatedButton(
-                  label: 'Sign Up',
                   isLoading: state.isProcessing,
                   onPressed: context.read<SignUpCubit>().signUpUserEmail,
+                  child: const Text('Sign Up'),
                 );
               },
             ),
