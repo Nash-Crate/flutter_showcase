@@ -1,10 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
+import 'package:flutter_showcase/features/home/home.dart';
 import 'package:flutter_showcase/logger.dart';
-// import 'package:skeletonizer/skeletonizer.dart';
 import 'package:video_player/video_player.dart';
+
+part 'post_card.claim.dart';
+part 'post_card.media.image.dart';
+part 'post_card.media.video.dart';
 
 /// A card widget to display a post.
 class PostCard extends StatefulWidget {
@@ -19,99 +24,85 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-  late VideoPlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.post.videoUrl))
-      // ..addListener(_onControllerUpdate)
-      ..initialize()
-          .then((_) {
-            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-            setState(() {});
-          })
-          .onError(
-            (error, stackTrace) async {
-              logger.e(error);
-              showErrorNotification('Error loading video: $error');
-            },
-          );
-  }
-
-  @override
-  void dispose() {
-    // _controller.removeListener(_onControllerUpdate);
-    unawaited(_controller.dispose());
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constrains) {
-        return Card(
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    BasicVideoPlayer(controller: _controller),
+    return BlocProvider.value(
+      value: BlocProvider.of<PostPurchaseCubit>(context),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<PostPurchaseCubit, PostPurchaseState>(
+            listenWhen: (prev, cur) =>
+                prev.isPostClaimed != cur.isPostClaimed || prev.error != cur.error,
+            listener: (context, state) async {
+              if (state.isPostClaimed) {
+                // Update the posts list from the purchased cubit post
+                context.read<HomeCubit>().postClaimed(state.post);
 
-                    Positioned(
-                      bottom: 0,
-                      child: SizedBox(
-                        width: constrains.maxWidth,
-                        child: VideoProgressIndicator(
-                          _controller,
-                          allowScrubbing: true, // enables seeking
+                // refresh the user credits value
+                unawaited(context.read<PurchasesCubit>().getUserCoins());
+
+                // Show success notification
+                showSuccessNotification('Post claimed successfully!');
+              }
+            },
+            child: LayoutBuilder(
+              builder: (context, constrains) {
+                return Card(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Cover media
+                      if (widget.post.videoUrl != null)
+                        PostCardMediaVideo(post: widget.post, constrains: constrains)
+                      else
+                        PostCardMediaImage(post: widget.post, constrains: constrains),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Post title
+                            Text(
+                              widget.post.title,
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+
+                            const Spacer(),
+
+                            // Claim widget
+                            BlocSelector<
+                              PostPurchaseCubit,
+                              PostPurchaseState,
+                              PostPurchaseProcessingState
+                            >(
+                              selector: (state) => state.processingState,
+                              builder: (context, processingState) {
+                                return SizedBox(
+                                  height: 40,
+                                  child: switch (processingState) {
+                                    PostPurchaseProcessingState.claiming => const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    PostPurchaseProcessingState.idle => PostCardClaim(widget.post),
+                                    PostPurchaseProcessingState.claimed => PostCardClaim(
+                                      widget.post,
+                                    ),
+                                  },
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-
-                    ValueListenableBuilder(
-                      valueListenable: _controller,
-                      builder: (context, value, child) {
-                        return Positioned(
-                          bottom: 4,
-                          right: 4,
-                          child: Text(
-                            '${value.position.inMinutes}:${value.position.inSeconds.toString().padLeft(2, '0')} / ${value.duration.inMinutes}:${value.duration.inSeconds.toString().padLeft(2, '0')}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-
-              // const SizedBox(height: 10),
-              TextButton(
-                onPressed: () async {
-                  await (_controller.value.isPlaying ? _controller.pause() : _controller.play());
-                  setState(() {});
-                },
-                child: ValueListenableBuilder(
-                  valueListenable: _controller,
-                  builder: (context, value, child) {
-                    return Icon(value.isPlaying ? Icons.pause : Icons.play_arrow);
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 10),
-            ],
-          ),
-        );
-      },
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

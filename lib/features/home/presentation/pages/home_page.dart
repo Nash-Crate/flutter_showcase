@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/home/home.dart';
+import 'package:flutter_showcase/injection.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -22,14 +24,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _scrollController = ScrollController();
+  bool _isFabVisible = true;
+
   @override
   void initState() {
     super.initState();
+
+    _scrollController.addListener(_onScroll);
 
     // fetch posts if already in the Authenticated state
     if (context.read<AuthCubit>().state is Authenticated) {
       unawaited(context.read<HomeCubit>().fetchPosts(isInit: true));
     }
+  }
+
+  void _onScroll() {
+    final isScrollingDown =
+        _scrollController.position.userScrollDirection == ScrollDirection.reverse;
+    final isScrollingUp = _scrollController.position.userScrollDirection == ScrollDirection.forward;
+
+    if (isScrollingDown && _isFabVisible) {
+      setState(() => _isFabVisible = false);
+    } else if (isScrollingUp && !_isFabVisible) {
+      setState(() => _isFabVisible = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,12 +75,20 @@ class _HomePageState extends State<HomePage> {
           );
         }
 
-        return const Scaffold(
-          backgroundColor: Color.fromRGBO(205, 205, 205, 1),
-          appBar: HomePageAppBar(),
-          body: HomePageContent(),
-          bottomNavigationBar: HomePageBottom(),
-          floatingActionButton: HomePageFab(),
+        return Scaffold(
+          backgroundColor: const Color.fromRGBO(205, 205, 205, 1),
+          appBar: const HomePageAppBar(),
+          body: HomePageContent(scrollController: _scrollController),
+          bottomNavigationBar: const HomePageBottom(),
+          floatingActionButton: AnimatedOpacity(
+            duration: const Duration(milliseconds: 300),
+            opacity: _isFabVisible ? 1 : 0,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: _isFabVisible ? 1.0 : 0.0,
+              child: const HomePageFab(),
+            ),
+          ),
         );
       },
     );

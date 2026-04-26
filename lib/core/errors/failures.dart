@@ -23,4 +23,7 @@ class Failure with _$Failure {
 
   /// Cache failures
   const factory Failure.cacheFailure(CacheFailure f) = _CacheFailure;
+
+  /// Custom failure with a message
+  const factory Failure.custom(String message) = _CustomFailure;
 }

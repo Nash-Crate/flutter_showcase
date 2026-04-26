@@ -1,45 +1,39 @@
 part of 'home_page.dart';
 
 /// The content of the home page.
-class HomePageContent extends StatefulWidget {
+class HomePageContent extends StatelessWidget {
   /// constructor
-  const HomePageContent({super.key});
+  const HomePageContent({required this.scrollController, super.key});
 
-  @override
-  State<HomePageContent> createState() => _HomePageContentState();
-}
+  /// The scroll controller for the posts list.
+  final ScrollController scrollController;
 
-class _HomePageContentState extends State<HomePageContent> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        // skeleton loading state
-        if (!state.initialized) {
-          return Skeletonizer(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return PostCard(
-                  Post(id: '$index', title: 'Post $index', videoUrl: ''),
-                  key: ValueKey('skeleton_$index'),
-                );
-              },
-            ),
-          );
+        if (state.error != null) {
+          return Center(child: Text('Error: ${state.error}'));
         }
 
-        if (state.posts.isEmpty) {
+        if (state.initialized && state.posts.isEmpty) {
           return const Center(child: Text('No posts found.'));
         }
 
-        return ListView.builder(
-          itemCount: state.posts.length,
-          itemBuilder: (context, index) {
-            final post = state.posts[index];
+        return Skeletonizer(
+          enabled: !state.initialized,
+          child: ListView.builder(
+            controller: scrollController,
+            itemCount: state.initialized ? state.posts.length : 10,
+            itemBuilder: (context, index) {
+              final post = state.initialized ? state.posts.values.toList()[index] : Post.empty();
 
-            return PostCard(post, key: ValueKey(post.id));
-          },
+              return BlocProvider(
+                create: (context) => getIt<PostPurchaseCubit>(param1: post),
+                child: PostCard(post, key: ValueKey(post.id)),
+              );
+            },
+          ),
         );
       },
     );

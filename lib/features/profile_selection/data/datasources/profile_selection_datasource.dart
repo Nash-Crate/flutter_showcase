@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/profile_selection/profile_selection.dart';
 import 'package:fpdart/fpdart.dart';
@@ -51,10 +49,7 @@ class ProfileSelectionDataSourceImpl implements ProfileSelectionDataSource {
   AsyncFailT<Unit> setLastUsedUserProfile(UserProfile profile) async {
     try {
       // save the last used profile id to cache
-      await _cacheStorage.upsert<String>(
-        key: AuthCacheKeys.userProfileId,
-        data: jsonEncode(UserProfileModel.fromDomain(profile).toJson()),
-      );
+      await _cacheStorage.upsert<int>(key: AuthCacheKeys.userProfileId, data: profile.id);
 
       return const Right(unit);
     } on Exception catch (e) {
