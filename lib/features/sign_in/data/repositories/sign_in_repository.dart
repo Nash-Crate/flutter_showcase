@@ -12,11 +12,6 @@ class SignInRepository implements ISignInRepository {
   final SignInDatasource _datasource;
 
   @override
-  AsyncFailT<Unit> checkAuth() {
-    return _datasource.checkAuth();
-  }
-
-  @override
   AsyncFailT<Unit> signInWithEmailAndPassword(EmailSignInDto dto) {
     return _datasource.signInWithEmailAndPassword(dto);
   }
@@ -24,10 +19,5 @@ class SignInRepository implements ISignInRepository {
   @override
   AsyncFailT<Unit> signInWithGoogle() {
     return _datasource.signInWithGoogle();
-  }
-
-  @override
-  AsyncFailT<Unit> signOut() {
-    return _datasource.signOut();
   }
 }

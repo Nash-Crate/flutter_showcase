@@ -21,6 +21,8 @@ class SignInPage extends StatelessWidget {
   /// on login state changed
   void onLoginStateChanged(BuildContext context, SignInState state) {
     if (state.result != null && state.result!.isRight()) {
+      // Notify the AuthCubit about the successful sign-in.
+      context.read<AuthCubit>().signInSuccess();
       // Fetch user profiles after successful sign-in.
       unawaited(context.read<ProfileSelectionCubit>().getUserProfiles());
 

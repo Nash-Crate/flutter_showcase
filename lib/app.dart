@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_showcase/core/core.dart';
+import 'package:flutter_showcase/features/home/home.dart';
 import 'package:flutter_showcase/features/profile_selection/profile_selection.dart';
 import 'package:flutter_showcase/injection.dart';
 
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => getIt<AuthCubit>()),
         BlocProvider(create: (context) => getIt<ProfileSelectionCubit>()),
+        BlocProvider(create: (context) => getIt<HomeCubit>()),
       ],
       child: MaterialApp.router(
         builder: (ctx, child) {

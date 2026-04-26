@@ -41,40 +41,6 @@ class SignInDatasourceImpl implements SignInDatasource {
   }
 
   @override
-  AsyncFailT<Unit> signOut() async {
-    try {
-      await _supabaseClient.auth.signOut();
-
-      return const Right(unit);
-    } on Exception catch (e) {
-      return Left(InfraExceptions.exceptionToFailure(e));
-    }
-  }
-
-  @override
-  AsyncFailT<Unit> checkAuth() async {
-    try {
-      final cachedSessionRes = await _cacheStorage.read<String>(key: AuthCacheKeys.userSession);
-      if (cachedSessionRes == null) {
-        return const Left(Failure.authFailure(AuthFailure.noPreviousAuth()));
-      }
-
-      final sessionRes = jsonDecode(cachedSessionRes);
-      // TODO(fix): add a json encode model
-      await _supabaseClient.auth.setSession(sessionRes['refresh_token']! as String);
-
-      final userId = _supabaseClient.auth.currentUser?.id;
-      if (userId == null) {
-        return const Left(Failure.unexpectedError('Failed to get user id from session'));
-      }
-
-      return const Right(unit);
-    } on Exception catch (e) {
-      return Left(InfraExceptions.exceptionToFailure(e));
-    }
-  }
-
-  @override
   AsyncFailT<Unit> signInWithGoogle() async {
     if (GoogleSignIn.instance.supportsAuthenticate()) {
       return const Left(

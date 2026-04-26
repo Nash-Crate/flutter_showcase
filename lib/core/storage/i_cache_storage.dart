@@ -8,4 +8,7 @@ abstract class ICacheStorage {
 
   /// Delete data from cache
   Future<bool> delete({required String key});
+
+  /// Clear all data from cache
+  Future<void> clear();
 }

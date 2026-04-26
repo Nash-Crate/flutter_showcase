@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/auth/core/core.dart';
 import 'package:flutter_showcase/core/extensions/extensions.dart';
-import 'package:flutter_showcase/features/sign_in/sign_in.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -63,11 +62,18 @@ class AuthCubit extends Cubit<AuthState> {
     emit(Authenticated(userProfile: userProfile));
   }
 
-  // /// Called when the user has successfully signed in.
-  // void signInSuccess() {
-  //   emit(const PartiallyAuthenticated(isProcessing: false));
+  /// Called when the user has successfully signed in.
+  void signInSuccess() {
+    emit(const Authenticated());
+  }
 
-  //   // Fetch user profiles after successful sign-in.
-  //   unawaited(getUserProfiles());
-  // }
+  /// Sets the active profile for the user.
+  void setActiveProfile(UserProfile profile) {
+    if (state is! Authenticated) {
+      addError('Cannot set active profile when not authenticated');
+      return;
+    }
+
+    emit(Authenticated(userProfile: profile));
+  }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/features/sign_in/sign_in.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,7 +8,7 @@ class CheckAuth implements UsecaseNoParams<Unit> {
   /// Constructor
   const CheckAuth(this._authRepository);
 
-  final ISignInRepository _authRepository;
+  final IAuthRepository _authRepository;
 
   @override
   AsyncFailT<Unit> call() {
