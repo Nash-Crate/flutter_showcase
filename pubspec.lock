@@ -105,14 +105,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  bot_toast:
-    dependency: "direct main"
-    description:
-      name: bot_toast
-      sha256: "6b93030a99a98335b8827ecd83021e92e885ffc61d261d3825ffdecdd17f3bdf"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.3"
   build:
     dependency: transitive
     description:
@@ -141,10 +133,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "4425a87d87d0d1303540f867994303f5b141ad2f6ecac7ac2cf8851f41c0cef1"
+      sha256: "22fdcc3cfeb9d974d7408718c4be15ec5e9b1b350088f3a6c88f154e74dd700d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.14.0"
+    version: "2.14.1"
   built_collection:
     dependency: transitive
     description:
@@ -345,6 +337,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.3"
+  fast_immutable_collections:
+    dependency: "direct main"
+    description:
+      name: fast_immutable_collections
+      sha256: "58cec99fc068427c71901e82d4b31b232240ebe6e61200993c2cb91bcada0ff6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.2.0"
   ffi:
     dependency: transitive
     description:
@@ -422,7 +422,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_web_plugins:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -701,7 +701,7 @@ packages:
     source: hosted
     version: "1.0.1"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: cb09e7dac6210041fad964ed7fbee004f14258b4eca4040f72d1234062ace4c8
@@ -940,6 +940,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pausable_timer:
+    dependency: transitive
+    description:
+      name: pausable_timer
+      sha256: "6ef1a95441ec3439de6fb63f39a011b67e693198e7dae14e20675c3c00e86074"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+3"
   petitparser:
     dependency: transitive
     description:
@@ -1033,6 +1041,14 @@ packages:
     description:
       name: purchases_flutter
       sha256: "40723bd949d58a005e3e3eeb0739d3ad664ad478e3e29697692e0d657f103c6e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.1"
+  purchases_ui_flutter:
+    dependency: "direct main"
+    description:
+      name: purchases_ui_flutter
+      sha256: "53350c889a8f35dba6e0090469a0e92bd7a0181bedeb84f3daff82bd59041edd"
       url: "https://pub.dev"
     source: hosted
     version: "10.0.1"
@@ -1337,6 +1353,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.16"
+  toastification:
+    dependency: "direct main"
+    description:
+      name: toastification
+      sha256: "66c96678e3dece8ba24de3ea31634bd65a80aaecb8105f9bafe946e5f0d7590a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   typed_data:
     dependency: transitive
     description:
@@ -1578,5 +1602,5 @@ packages:
     source: hosted
     version: "2.1.0"
 sdks:
-  dart: ">=3.11.4 <4.0.0"
-  flutter: ">=3.38.4"
+  dart: ">=3.11.5 <4.0.0"
+  flutter: ">=3.41.7 <=4.0.0"

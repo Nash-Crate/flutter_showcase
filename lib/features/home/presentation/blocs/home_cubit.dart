@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
+import 'package:flutter_showcase/features/home/home.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,7 +15,9 @@ part 'home_cubit.freezed.dart';
 @injectable
 class HomeCubit extends Cubit<HomeState> {
   /// Constructor
-  HomeCubit() : super(HomeState.initial());
+  HomeCubit(this._fetchPosts) : super(HomeState.initial());
+
+  final FetchPosts _fetchPosts;
 
   /// Fetch the posts
   Future<void> fetchPosts({bool isInit = false}) async {
@@ -22,20 +26,23 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(state.copyWith(isLoading: true));
 
-    // Simulate network delay
-    await Future<void>.delayed(const Duration(seconds: 1));
+    final params = FetchPostsParams(skip: (state.page - 1) * state.pageSize, limit: state.pageSize);
+    final res = await _fetchPosts(params);
 
-    // Simulate fetching posts from an API
-    final fetchedPosts = List.generate(state.pageSize, (index) {
-      final postId = (state.page - 1) * state.pageSize + index + 1;
-      return Post(
-        id: '$postId',
-        title: 'Post $postId',
-        videoUrl: 'https://www.w3schools.com/tags/mov_bbb.mp4',
-      );
-    });
+    if (res.isLeft()) {
+      return emit(state.copyWith(isLoading: false, error: res.asL.toString()));
+    }
 
-    emit(state.copyWith(posts: fetchedPosts, isLoading: false, initialized: true));
+    // Convert the list of posts to a map for easier updates
+    final postsMap = IMap.fromValues(keyMapper: (p) => p.id, values: res.asR);
+
+    emit(
+      state.copyWith(
+        posts: isInit ? postsMap : state.posts.addAll(postsMap),
+        isLoading: false,
+        initialized: true,
+      ),
+    );
   }
 
   /// Load more posts (for pagination)
@@ -45,5 +52,10 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(isLoading: true, page: state.page + 1));
 
     unawaited(fetchPosts());
+  }
+
+  /// set a post as claimed
+  void postClaimed(Post claimedPost) {
+    emit(state.copyWith(posts: state.posts.add(claimedPost.id, claimedPost)));
   }
 }

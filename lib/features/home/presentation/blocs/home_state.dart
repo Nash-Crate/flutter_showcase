@@ -5,13 +5,14 @@ part of 'home_cubit.dart';
 abstract class HomeState with _$HomeState {
   /// constructor
   const factory HomeState({
-    @Default([]) List<Post> posts,
+    @Default(IMapConst({})) IMap<int, Post> posts,
     @Default(1) int page,
     @Default(10) int pageSize,
     @Default(true) bool isLoading,
 
     // This flag indicates whether the posts have been loaded at least once.
     @Default(false) bool initialized,
+    @Default(null) String? error,
   }) = _HomeState;
 
   /// Initial state

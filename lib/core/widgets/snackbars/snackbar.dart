@@ -1,46 +1,59 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 /// Clear snackbars
-void clearAllNotifications() => BotToast.cleanAll();
+void clearAllNotifications() => toastification.dismissAll();
+
+/// Clear snackbar by id
+void dismissNotificationById(String id) => toastification.dismissById(id);
 
 /// Clear grouped snackbars
-void clearAllGroupNotifications(String groupKey) => BotToast.removeAll(groupKey);
+// void clearAllGroupNotifications(String groupKey) => BotToast.removeAll(groupKey);
 
 /// Error snackbar
-void showErrorNotification(String msg, {String? groupKey}) {
-  BotToast.showSimpleNotification(
-    title: msg,
-    backgroundColor: Colors.redAccent,
-    duration: const Duration(seconds: 30),
-    // titleStyle: context.primaryTextTheme.titleSmall,
-    // TODO(temp): ?.copyWith(color: AppColors.white),
-    crossPage: true,
-    hideCloseButton: false,
+void showErrorNotification(String msg) {
+  toastification.show(
+    title: Text(msg),
+    primaryColor: Colors.redAccent,
+    autoCloseDuration: const Duration(seconds: 30),
+    // animationDuration: const Duration(seconds: 30),
+    // animationBuilder: (context, animation, alignment, child) {
+    //   return RotationTransition(
+    //     turns: animation,
+    //     child: child,
+    //   );
+    // },
   );
 }
 
 /// Success snackbar
 void showSuccessNotification(String msg) {
-  BotToast.showSimpleNotification(
-    title: msg,
-    backgroundColor: Colors.greenAccent,
-    duration: const Duration(seconds: 5),
-    // titleStyle: Theme.of(context).textTheme.titleSmall,
-    // TODO(temp): ?.copyWith(color: AppColors.white),
-    crossPage: true,
-    hideCloseButton: false,
+  toastification.show(
+    title: Text(msg),
+    primaryColor: Colors.greenAccent,
+    autoCloseDuration: const Duration(seconds: 5),
+    // animationDuration: const Duration(seconds: 5),
+    // animationBuilder: (context, animation, alignment, child) {
+    //   return RotationTransition(
+    //     turns: animation,
+    //     child: child,
+    //   );
+    // },
   );
 }
 
 /// Info snackbar
 void showInfoNotification(String msg) {
-  BotToast.showSimpleNotification(
-    title: msg,
-    backgroundColor: Colors.blueAccent,
-    duration: const Duration(seconds: 5),
-    // titleStyle: Theme.of(context).textTheme.titleSmall,
-    // TODO(temp): ?.copyWith(color: AppColors.white),
-    hideCloseButton: false,
+  toastification.show(
+    title: Text(msg),
+    primaryColor: Colors.blueAccent,
+    autoCloseDuration: const Duration(seconds: 5),
+    // animationDuration: const Duration(seconds: 5),
+    // animationBuilder: (context, animation, alignment, child) {
+    //   return RotationTransition(
+    //     turns: animation,
+    //     child: child,
+    //   );
+    // },
   );
 }

@@ -6,7 +6,8 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 0.0.1+1
 
 environment:
-  sdk: ^3.11.4
+  sdk: ">=3.11.5 <=4.0.0"
+  flutter: ">=3.41.7 <=4.0.0"
 
 dependencies:
   flutter:
@@ -38,6 +39,7 @@ dependencies:
 
   # payments
   purchases_flutter: ^10.0.1
+  purchases_ui_flutter: ^10.0.1
 
   # routing
   go_router: ^17.2.2
@@ -54,18 +56,18 @@ dependencies:
   flutter_screenutil: ^5.9.3
 
   # UI components
-  bot_toast: ^4.1.3
   skeletonizer: ^2.1.3
+  toastification: ^3.2.0
   video_player: ^2.11.1
 
   # utils
   collection: ^1.19.1
+  fast_immutable_collections: ^11.2.0
   freezed_annotation: ^3.1.0
+  json_annotation: ^4.11.0
   logger: ^2.7.0
   package_info_plus: ^10.1.0
   uuid: ^4.5.3
-  flutter_web_plugins:
-    sdk: flutter
 
 dev_dependencies:
   # code analyzers

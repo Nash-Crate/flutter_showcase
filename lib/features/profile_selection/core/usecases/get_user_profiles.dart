@@ -1,6 +1,4 @@
-import 'package:flutter_showcase/core/auth/core/core.dart';
-import 'package:flutter_showcase/core/types/type_defs.dart';
-import 'package:flutter_showcase/core/usecases/usecase.dart';
+import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/profile_selection/profile_selection.dart';
 import 'package:injectable/injectable.dart';
 

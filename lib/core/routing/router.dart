@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/logger.dart';
@@ -13,7 +12,7 @@ bool _isFirstLoad = true;
 final appRouter = GoRouter(
   navigatorKey: navigatorKey,
   initialLocation: SplashRoute().location,
-  observers: [BotToastNavigatorObserver()],
+  // observers: [BotToastNavigatorObserver()],
   redirect: (context, state) {
     if (_isFirstLoad) {
       _isFirstLoad = false;

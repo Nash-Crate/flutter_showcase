@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,9 +5,7 @@ import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/home/home.dart';
 import 'package:flutter_showcase/features/profile_selection/profile_selection.dart';
 import 'package:flutter_showcase/injection.dart';
-
-/// BotToastInit instance
-final TransitionBuilder botToastBuilder = BotToastInit();
+import 'package:toastification/toastification.dart';
 
 /// The main application widget.
 class App extends StatelessWidget {
@@ -17,17 +14,25 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIt<AuthCubit>()),
-        BlocProvider(create: (context) => getIt<ProfileSelectionCubit>()),
-        BlocProvider(create: (context) => getIt<HomeCubit>()),
-      ],
+    return ToastificationWrapper(
+      config: const ToastificationConfig(),
       child: MaterialApp.router(
         builder: (ctx, child) {
           // initialise screenUtil
           ScreenUtil.init(ctx);
-          return Theme(data: lightTheme, child: botToastBuilder(ctx, child));
+
+          return Theme(
+            data: lightTheme,
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<AuthCubit>()),
+                BlocProvider(create: (context) => getIt<HomeCubit>()),
+                BlocProvider(create: (context) => getIt<ProfileSelectionCubit>()),
+                BlocProvider(create: (context) => getIt<PurchasesCubit>()),
+              ],
+              child: Theme(data: lightTheme, child: child!),
+            ),
+          );
         },
         routerConfig: appRouter,
       ),
