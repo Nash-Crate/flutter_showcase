@@ -28,6 +28,9 @@ class AuthDatasourceImpl implements AuthDatasource {
       // TODO(fix): add a json encode model
       await _supabaseClient.auth.setSession(sessionRes['refresh_token']! as String);
 
+      // refresh the session to get the latest session data and validate the session
+      await _supabaseClient.auth.refreshSession();
+
       final userId = _supabaseClient.auth.currentUser?.id;
       if (userId == null) {
         return const Left(Failure.unexpectedError('Failed to get user id from session'));
