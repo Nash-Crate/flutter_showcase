@@ -3,19 +3,19 @@ import 'dart:async';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/features/home/home.dart';
+import 'package:flutter_showcase/features/posts/posts.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-part 'home_state.dart';
+part 'posts_state.dart';
 
-part 'home_cubit.freezed.dart';
+part 'posts_cubit.freezed.dart';
 
-/// The HomeCubit manages the state of the home page.
+/// The PostsCubit manages the state of the posts page.
 @injectable
-class HomeCubit extends Cubit<HomeState> {
+class PostsCubit extends Cubit<PostsState> {
   /// Constructor
-  HomeCubit(this._fetchPosts) : super(HomeState.initial());
+  PostsCubit(this._fetchPosts) : super(PostsState.initial());
 
   final FetchPosts _fetchPosts;
 

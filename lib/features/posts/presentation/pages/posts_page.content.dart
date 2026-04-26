@@ -1,16 +1,16 @@
-part of 'home_page.dart';
+part of 'posts_page.dart';
 
-/// The content of the home page.
-class HomePageContent extends StatelessWidget {
+/// The content of the posts page.
+class PostsPageContent extends StatelessWidget {
   /// constructor
-  const HomePageContent({required this.scrollController, super.key});
+  const PostsPageContent({required this.scrollController, super.key});
 
   /// The scroll controller for the posts list.
   final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<PostsCubit, PostsState>(
       builder: (context, state) {
         if (state.error != null) {
           return Center(child: Text('Error: ${state.error}'));

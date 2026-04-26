@@ -1,5 +1,5 @@
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/features/home/home.dart';
+import 'package:flutter_showcase/features/posts/posts.dart';
 import 'package:injectable/injectable.dart';
 
 /// Usecase to claim a post

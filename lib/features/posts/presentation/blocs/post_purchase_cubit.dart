@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/features/home/home.dart';
+import 'package:flutter_showcase/features/posts/posts.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 

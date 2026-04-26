@@ -1,9 +1,9 @@
-part of 'home_page.dart';
+part of 'posts_page.dart';
 
-/// The bottom navigation bar of the home page.
-class HomePageBottom extends StatelessWidget {
+/// The bottom navigation bar of the posts page.
+class PostsPageBottom extends StatelessWidget {
   /// constructor
-  const HomePageBottom({super.key});
+  const PostsPageBottom({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/features/home/home.dart';
+import 'package:flutter_showcase/features/posts/posts.dart';
 import 'package:flutter_showcase/logger.dart';
 import 'package:video_player/video_player.dart';
 
@@ -36,7 +36,7 @@ class _PostCardState extends State<PostCard> {
             listener: (context, state) async {
               if (state.isPostClaimed) {
                 // Update the posts list from the purchased cubit post
-                context.read<HomeCubit>().postClaimed(state.post);
+                context.read<PostsCubit>().postClaimed(state.post);
 
                 // refresh the user credits value
                 unawaited(context.read<PurchasesCubit>().getUserCoins());

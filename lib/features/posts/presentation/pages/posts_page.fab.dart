@@ -1,9 +1,9 @@
-part of 'home_page.dart';
+part of 'posts_page.dart';
 
-/// The floating action button of the home page.
-class HomePageFab extends StatelessWidget {
+/// The floating action button of the posts page.
+class PostsPageFab extends StatelessWidget {
   /// constructor
-  const HomePageFab({super.key});
+  const PostsPageFab({super.key});
 
   @override
   Widget build(BuildContext context) {
