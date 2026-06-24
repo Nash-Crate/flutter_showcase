@@ -16,7 +16,7 @@ class PostCardClaim extends StatelessWidget {
             onTap: () async {
               final claimed = await showDialog<bool>(
                 context: context,
-                builder: (_) {
+                builder: (dialogContext) {
                   return AlertDialog(
                     title: const Text('Claim Post'),
                     content: Text(
@@ -24,11 +24,11 @@ class PostCardClaim extends StatelessWidget {
                     ),
                     actions: [
                       TextButton(
-                        onPressed: () => Navigator.pop(context, false),
+                        onPressed: () => Navigator.of(dialogContext).pop(false),
                         child: const Text('Cancel'),
                       ),
                       ElevatedButton(
-                        onPressed: () => Navigator.pop(context, true),
+                        onPressed: () => Navigator.of(dialogContext).pop(true),
                         child: const Text('Claim'),
                       ),
                     ],
