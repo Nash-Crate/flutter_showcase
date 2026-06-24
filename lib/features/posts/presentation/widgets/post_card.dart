@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/posts/posts.dart';
-import 'package:flutter_showcase/features/purchases/purchases.dart';
 import 'package:flutter_showcase/logger.dart';
 import 'package:video_player/video_player.dart';
 

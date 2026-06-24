@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/core/extensions/extensions.dart';
 import 'package:flutter_showcase/features/sign_up/sign_up.dart';
 import 'package:flutter_showcase/injection.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +20,7 @@ class SignUpPage extends StatelessWidget {
       // Show success message
       showSuccessNotification('Sign Up successful, please login.');
       // Navigate back to the login page
-      context.pushReplacement(SignInRoute().location);
+      context.pushReplacement(const SignInRoute().location);
     }
   }
 

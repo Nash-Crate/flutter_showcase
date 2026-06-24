@@ -5,7 +5,6 @@ import 'package:flutter_showcase/features/purchases/purchases.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 /// The purchases datasource of the app.
 abstract class PurchasesDatasource with IPurchasesRepository {}
@@ -14,10 +13,7 @@ abstract class PurchasesDatasource with IPurchasesRepository {}
 @Singleton(as: PurchasesDatasource)
 class PurchasesDatasourceImpl implements PurchasesDatasource {
   /// Constructor
-  const PurchasesDatasourceImpl(this._supabaseClient, this._cacheStorage);
-
-  final supabase.SupabaseClient _supabaseClient;
-  final ICacheStorage _cacheStorage;
+  const PurchasesDatasourceImpl();
 
   @override
   AsyncFailT<Unit> initializePurchasing() async {

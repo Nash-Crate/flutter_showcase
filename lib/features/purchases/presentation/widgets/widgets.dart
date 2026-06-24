@@ -1,2 +1,2 @@
 //GENERATED BARREL FILE
-export './sheets/sheets.dart';
+export 'sheets/sheets.dart';

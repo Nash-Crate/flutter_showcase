@@ -19,8 +19,6 @@ part 'go_router_refresh_stream.dart';
 
 part 'router.g.dart';
 
-part 'router_transition.dart';
-
 part 'routes.dart';
 
 /// navigator key for the root navigator

@@ -36,7 +36,7 @@ class ProfileSelectionPage extends StatelessWidget {
                   // Notify the ProfileSelectionCubit about the selected profile.
                   unawaited(context.read<ProfileSelectionCubit>().selectProfile(profile));
 
-                  PostsRoute().pushReplacement(context);
+                  const PostsRoute().pushReplacement(context);
                 },
               );
             },

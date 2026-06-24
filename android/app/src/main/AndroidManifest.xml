@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -27,6 +27,43 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- ==== DEEP LINKING ==== START -->
+            <!-- Disable default Flutter deep-linking -->
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="false" />
+
+            <!-- EXAMPLE
+               adb shell am start -a android.intent.action.VIEW -d "nashcrate://open.my.showcase/#/book/hello-world"
+               -->
+
+            <!-- App Link -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="nashcrate.com"
+                    android:pathPrefix="/flutter_showcase"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <!-- Deep Link -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Add optional android:host to distinguish your app
+                      from others in case of conflicting scheme name -->
+                <data
+                    android:host="open.my.showcase"
+                    android:scheme="nashcrate" />
+            </intent-filter>
+            <!-- ==== DEEP LINKING ==== END -->
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

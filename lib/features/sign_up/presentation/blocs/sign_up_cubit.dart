@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/core/extensions/extensions.dart';
 import 'package:flutter_showcase/features/sign_up/sign_up.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

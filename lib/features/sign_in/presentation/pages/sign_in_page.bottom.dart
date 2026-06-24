@@ -13,7 +13,7 @@ class SignInPageBottomNav extends StatelessWidget {
         children: [
           const Text('OR'),
           TextButton(
-            onPressed: () => context.push(SignUpRoute().location),
+            onPressed: () => context.push(const SignUpRoute().location),
             child: const Text('Sign Up'),
           ),
         ],

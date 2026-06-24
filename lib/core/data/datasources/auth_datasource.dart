@@ -26,6 +26,7 @@ class AuthDatasourceImpl implements AuthDatasource {
 
       final sessionRes = jsonDecode(cachedSessionRes);
       // TODO(fix): add a json encode model
+      // ignore: avoid_dynamic_calls
       await _supabaseClient.auth.setSession(sessionRes['refresh_token']! as String);
 
       // refresh the session to get the latest session data and validate the session

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/profile/profile.dart';
-import 'package:flutter_showcase/logger.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;

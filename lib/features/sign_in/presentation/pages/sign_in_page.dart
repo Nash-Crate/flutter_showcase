@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
-import 'package:flutter_showcase/core/extensions/extensions.dart';
 import 'package:flutter_showcase/features/profile_selection/presentation/blocs/blocs.dart';
 import 'package:flutter_showcase/features/sign_in/sign_in.dart';
 import 'package:flutter_showcase/injection.dart';
@@ -27,7 +26,7 @@ class SignInPage extends StatelessWidget {
       unawaited(context.read<ProfileSelectionCubit>().getUserProfiles());
 
       // Navigate to the profile selection page after successful login
-      context.pushReplacement(ProfileSelectionRoute().location);
+      context.pushReplacement(const ProfileSelectionRoute().location);
     }
   }
 
