@@ -9,8 +9,6 @@ import 'package:flutter_showcase/injection.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-part 'posts_page.app_bar.dart';
-part 'posts_page.bottom.dart';
 part 'posts_page.content.dart';
 part 'posts_page.fab.dart';
 
@@ -76,10 +74,7 @@ class _PostsPageState extends State<PostsPage> {
         }
 
         return Scaffold(
-          backgroundColor: const Color.fromRGBO(205, 205, 205, 1),
-          appBar: const PostsPageAppBar(),
           body: PostsPageContent(scrollController: _scrollController),
-          bottomNavigationBar: const PostsPageBottom(),
           floatingActionButton: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
             opacity: _isFabVisible ? 1 : 0,

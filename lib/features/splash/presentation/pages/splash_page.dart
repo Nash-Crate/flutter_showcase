@@ -24,8 +24,6 @@ class _SplashPageState extends State<SplashPage> {
 
   /// Wait for the configs to be loaded
   Future<void> configsChecker() async {
-    await Future<void>.delayed(const Duration(seconds: 1));
-
     var flag = true;
     while (flag) {
       if (!flag) return;
@@ -41,17 +39,17 @@ class _SplashPageState extends State<SplashPage> {
           flag = false;
 
           return intendedPath != null
-              ? context.pushReplacement(intendedPath)
+              ? context.go(intendedPath)
               : (authState.userProfile == null
-                    ? ProfileSelectionRoute().pushReplacement(context)
-                    : HomeRoute().pushReplacement(context));
+                    ? const ProfileSelectionRoute().go(context)
+                    : const PostsRoute().go(context));
         } else if (authState is Unauthenticated) {
           // stop the checker loop
           flag = false;
-          return context.pushReplacement(intendedPath ?? SignInRoute().location);
+          return context.go(intendedPath ?? SignInRoute().location);
         }
 
-        await Future<void>.delayed(const Duration(milliseconds: 300));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
       }
     }
   }

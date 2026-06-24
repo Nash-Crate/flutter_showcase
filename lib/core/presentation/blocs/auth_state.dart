@@ -2,7 +2,7 @@ part of 'auth_cubit.dart';
 
 /// State class for authentication.
 @freezed
-abstract class AuthState with _$AuthState {
+sealed class AuthState with _$AuthState {
   /// Processing state
   const factory AuthState.processing() = Processing;
 

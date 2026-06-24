@@ -29,7 +29,9 @@ class AuthDatasourceImpl implements AuthDatasource {
       await _supabaseClient.auth.setSession(sessionRes['refresh_token']! as String);
 
       // refresh the session to get the latest session data and validate the session
-      await _supabaseClient.auth.refreshSession();
+      final newSession = await _supabaseClient.auth.refreshSession();
+      final sessionString = jsonEncode(newSession.session);
+      await _cacheStorage.upsert<String>(key: AuthCacheKeys.userSession, data: sessionString);
 
       final userId = _supabaseClient.auth.currentUser?.id;
       if (userId == null) {

@@ -1,9 +1,9 @@
-part of 'posts_page.dart';
+part of 'home_page.dart';
 
-/// The app bar for the posts page.
-class PostsPageAppBar extends StatelessWidget implements PreferredSizeWidget {
+/// The app bar for the home page.
+class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// constructor
-  const PostsPageAppBar({super.key});
+  const HomePageAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
