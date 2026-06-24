@@ -8,13 +8,12 @@ import 'package:injectable/injectable.dart';
 part 'purchases_cubit.freezed.dart';
 part 'purchases_cubit_state.dart';
 
-/// Manages the general purchease features
+/// Manages the general purchases features
 @singleton
 class PurchasesCubit extends Cubit<PurchasesState> {
   /// constructor
   PurchasesCubit(this._initializePurchases, this._getUserCoins) : super(PurchasesState.initial()) {
     unawaited(initialize());
-    unawaited(getUserCoins());
   }
 
   final InitializePurchases _initializePurchases;

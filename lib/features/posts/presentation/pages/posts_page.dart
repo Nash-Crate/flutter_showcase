@@ -63,7 +63,7 @@ class _PostsPageState extends State<PostsPage> {
           // Fetch posts when the user is authenticated
           unawaited(context.read<PostsCubit>().fetchPosts(isInit: true));
         } else if (state is Unauthenticated) {
-          context.pushReplacement(SignInRoute().location);
+          context.pushReplacement(const SignInRoute().location);
         }
       },
       builder: (context, state) {
@@ -74,6 +74,7 @@ class _PostsPageState extends State<PostsPage> {
         }
 
         return Scaffold(
+          appBar: AppBar(title: const Text('Posts')),
           body: PostsPageContent(scrollController: _scrollController),
           floatingActionButton: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),

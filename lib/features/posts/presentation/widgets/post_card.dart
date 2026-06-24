@@ -63,9 +63,28 @@ class _PostCardState extends State<PostCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // Post title
-                            Text(
-                              widget.post.title,
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.post.title,
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                if (widget.post.videoUrl != null)
+                                  InkWell(
+                                    onTap: () {
+                                      PostDetailRoute(id: widget.post.id.toString()).go(context);
+                                    },
+                                    child: const Text(
+                                      'View Post',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
 
                             const Spacer(),

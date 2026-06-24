@@ -1,63 +1,32 @@
 part of 'home_page.dart';
 
 final List<({IconData icon, String label, String route})> _tabs = [
-  (route: const PostsRoute().location, icon: Icons.search, label: 'Posts'),
-  // (route: AccountRoute().location, icon: Icons.person, label: 'Account'),
+  (route: const PostsRoute().location, icon: Icons.home, label: 'Posts'),
+  (route: const SearchRoute().location, icon: Icons.search, label: 'Search'),
+  (route: const ProfileRoute().location, icon: Icons.person, label: 'Profile'),
 ];
 
 /// The bottom navigation bar of the Home page.
 class HomePageBottom extends StatelessWidget {
   /// constructor
-  const HomePageBottom({super.key});
+  const HomePageBottom({required this.navigationShell, super.key});
 
-  int _currentIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.path;
-    final index = _tabs.indexWhere((t) => location.startsWith(t.route));
-    return index < 0 ? 0 : index;
+  /// The navigation shell that manages the state of the bottom navigation bar and its branches.
+  final StatefulNavigationShell navigationShell;
+
+  void _onTap(int index) {
+    // initialLocation: true re-taps return the branch to its root.
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // final currentPath = GoRouterState.of(context).uri;
-
-    // late final int currentIndex;
-    // if (PostsRoute().location == currentPath.path) {
-    //   currentIndex = 0;
-    // } else if (AccountRoute().location == currentPath.path) {
-    //   currentIndex = 1;
-    // } else {
-    //   currentIndex = 0;
-    // }
-
-    // return BottomNavigationBar(
-    //   currentIndex: currentIndex,
-    //   onTap: (index) {
-    //     switch (index) {
-    //       case 0:
-    //         context.go(PostsRoute().location);
-    //       case 1:
-    //         context.go(AccountRoute().location);
-    //     }
-    //   },
-    //   items: const [
-    //     BottomNavigationBarItem(
-    //       icon: Icon(Icons.feed),
-    //       label: 'Feed',
-    //     ),
-    //     // BottomNavigationBarItem(
-    //     //   icon: Icon(Icons.search),
-    //     //   label: 'Search',
-    //     // ),
-    //     BottomNavigationBarItem(
-    //       icon: Icon(Icons.person),
-    //       label: 'Profile',
-    //     ),
-    //   ],
-    // );
-
     return NavigationBar(
-      selectedIndex: _currentIndex(context),
-      onDestinationSelected: (index) => context.go(_tabs[index].route),
+      selectedIndex: navigationShell.currentIndex,
+      onDestinationSelected: _onTap,
       destinations: _tabs
           .map(
             (t) => NavigationDestination(

@@ -19,11 +19,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    unawaited(configsChecker());
+    unawaited(_splashProcess());
   }
 
-  /// Wait for the configs to be loaded
-  Future<void> configsChecker() async {
+  /// checks the authentication state and navigates to the appropriate page.
+  Future<void> _splashProcess() async {
     var flag = true;
     while (flag) {
       if (!flag) return;
@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
         } else if (authState is Unauthenticated) {
           // stop the checker loop
           flag = false;
-          return context.go(intendedPath ?? SignInRoute().location);
+          return context.go(intendedPath ?? const SignInRoute().location);
         }
 
         await Future<void>.delayed(const Duration(milliseconds: 200));
