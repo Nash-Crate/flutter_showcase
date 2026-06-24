@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/posts/posts.dart';
 import 'package:flutter_showcase/features/profile_selection/profile_selection.dart';
+import 'package:flutter_showcase/features/purchases/purchases.dart';
 import 'package:flutter_showcase/injection.dart';
 import 'package:toastification/toastification.dart';
 

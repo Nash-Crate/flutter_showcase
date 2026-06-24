@@ -5,7 +5,4 @@ import 'package:fpdart/fpdart.dart';
 mixin IPurchasesRepository {
   /// Initializes the purchasing system.
   AsyncFailT<Unit> initializePurchasing();
-
-  /// Fetches the user's coins.
-  AsyncFailT<double> getUserCoins();
 }

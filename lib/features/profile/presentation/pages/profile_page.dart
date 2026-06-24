@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_showcase/core/core.dart';
 import 'package:flutter_showcase/features/profile/profile.dart';
+import 'package:flutter_showcase/features/purchases/purchases.dart';
 import 'package:flutter_showcase/injection.dart';
 
 /// The profile page of the app.
@@ -66,38 +67,54 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             body: Column(
+              spacing: 20,
               children: [
+                // coins balance
                 BlocSelector<ProfileCoinsCubit, ProfileCoinsState, double>(
                   selector: (state) => state.coins,
                   builder: (context, coins) {
                     return Column(
                       children: [
                         Text('Coins Balance: ', style: Theme.of(context).textTheme.bodyMedium),
-                        Center(
-                          child: Text.rich(
-                            TextSpan(
-                              text: '',
-                              style: Theme.of(context).textTheme.bodySmall,
+                        Text.rich(
+                          TextSpan(
+                            text: '',
+                            style: Theme.of(context).textTheme.bodySmall,
 
-                              children: [
-                                TextSpan(
-                                  text: coins.toStringAsFixed(2),
-                                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                    color: Colors.amber,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            children: [
+                              TextSpan(
+                                text: coins.toStringAsFixed(2),
+                                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                // TextSpan(
-                                //   text: r' NC$',
-                                //   style: Theme.of(context).textTheme.bodySmall,
-                                // ),
-                              ],
-                            ),
+                              ),
+                              // TextSpan(
+                              //   text: r' NC$',
+                              //   style: Theme.of(context).textTheme.bodySmall,
+                              // ),
+                            ],
                           ),
                         ),
                       ],
                     );
                   },
+                ),
+
+                // purchase coins
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      child: const Text('Purchase Coins'),
+                      onPressed: () async {
+                        await showModalBottomSheet<void>(
+                          context: context,
+                          builder: (context) => const PurchaseCoinsBottomSheet(),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

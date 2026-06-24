@@ -1,19 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter_showcase/core/core.dart';
+import 'package:flutter_showcase/features/purchases/purchases.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
-/// Abstract definitions for the Purchasess DataSource
-abstract class PurchasesDataSource with IPurchasesRepository {}
+/// The purchases datasource of the app.
+abstract class PurchasesDatasource with IPurchasesRepository {}
 
-/// Implementation of the PaymentsDataSource using RevenueCat
-@Singleton(as: PurchasesDataSource)
-class PurchasesDataSourceImpl implements PurchasesDataSource {
+/// The implementation of [PurchasesDatasource]
+@Singleton(as: PurchasesDatasource)
+class PurchasesDatasourceImpl implements PurchasesDatasource {
   /// Constructor
-  const PurchasesDataSourceImpl(this._supabaseClient, this._cacheStorage);
+  const PurchasesDatasourceImpl(this._supabaseClient, this._cacheStorage);
 
   final supabase.SupabaseClient _supabaseClient;
   final ICacheStorage _cacheStorage;
@@ -37,26 +38,6 @@ class PurchasesDataSourceImpl implements PurchasesDataSource {
 
       await Purchases.configure(PurchasesConfiguration(apiKey));
       return const Right(unit);
-    } on Exception catch (e) {
-      return Left(InfraExceptions.exceptionToFailure(e));
-    }
-  }
-
-  @override
-  AsyncFailT<double> getUserCoins() async {
-    try {
-      final profileId = await _cacheStorage.read<int>(key: AuthCacheKeys.userProfileId);
-
-      final coinsJson = await _supabaseClient
-          .from('user_profiles_coins')
-          .select('coins')
-          .eq(
-            'profile_id',
-            profileId.toString(),
-          )
-          .single();
-
-      return Right(coinsJson['coins'] as double);
     } on Exception catch (e) {
       return Left(InfraExceptions.exceptionToFailure(e));
     }

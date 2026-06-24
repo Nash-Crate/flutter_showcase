@@ -3,7 +3,7 @@ import 'package:flutter_showcase/features/profile/profile.dart';
 
 import 'package:injectable/injectable.dart';
 
-/// Usecase class for getting the profile coins.
+/// Usecase class for fetching and streaming the profile coins.
 @singleton
 class WatchProfileCoins implements UsecaseStreamNoParams<double> {
   /// Constructor
@@ -13,6 +13,6 @@ class WatchProfileCoins implements UsecaseStreamNoParams<double> {
 
   @override
   StreamFailT<double> call() {
-    return _repository.fetchProfileCoins();
+    return _repository.watchProfileCoins();
   }
 }

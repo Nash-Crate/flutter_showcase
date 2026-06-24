@@ -11,7 +11,12 @@ class ProfileRepository implements IProfileRepository {
   final ProfileDatasource _datasource;
 
   @override
-  StreamFailT<double> fetchProfileCoins() {
-    return _datasource.fetchProfileCoins();
+  StreamFailT<double> watchProfileCoins() {
+    return _datasource.watchProfileCoins();
+  }
+
+  @override
+  AsyncFailT<double> getUserCoins() {
+    return _datasource.getUserCoins();
   }
 }
