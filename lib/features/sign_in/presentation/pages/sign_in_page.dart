@@ -20,13 +20,12 @@ class SignInPage extends StatelessWidget {
   /// on login state changed
   void onLoginStateChanged(BuildContext context, SignInState state) {
     if (state.result != null && state.result!.isRight()) {
-      // Notify the AuthCubit about the successful sign-in.
+      // Notify the AuthCubit about the successful sign-in. The router's
+      // redirect reacts to this state change and routes to profile-selection
+      // (or the preserved deep-link destination).
       context.read<AuthCubit>().signInSuccess();
       // Fetch user profiles after successful sign-in.
       unawaited(context.read<ProfileSelectionCubit>().getUserProfiles());
-
-      // Navigate to the profile selection page after successful login
-      context.pushReplacement(const ProfileSelectionRoute().location);
     }
   }
 

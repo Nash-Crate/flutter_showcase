@@ -36,28 +36,44 @@ final appRouter = GoRouter(
     final loc = state.matchedLocation;
 
     const splash = '/splash';
+    const signIn = '/sign-in';
     const profileSelection = '/profile-selection';
 
     final onSplash = loc == splash;
-    final onAuthPages = loc == '/sign-in' || loc == '/sign-up';
+    final onAuthPages = loc == signIn || loc == '/sign-up';
+    final onProfileSelection = loc == profileSelection;
+
+    // The destination to reach once auth/profile is resolved. Prefer an
+    // already-preserved `?from=`, otherwise the current location when it's a
+    // real in-app target (not a gate page). This is how a deep link survives
+    // the splash -> sign-in -> profile-selection gate.
+    var intended = state.uri.queryParameters['from'];
+    if (intended == null && !onSplash && !onAuthPages && !onProfileSelection && loc != '/') {
+      intended = state.uri.toString();
+    }
+
+    // Redirect to [path], carrying the intended destination as `?from=`.
+    String withFrom(String path) =>
+        intended == null ? path : Uri(path: path, queryParameters: {'from': intended}).toString();
 
     switch (auth) {
       case Processing():
-        // still validating the session — hold on splash
-        return onSplash ? null : splash;
+        // still validating the session — hold on splash, keep the target
+        return onSplash ? null : withFrom(splash);
 
       case Unauthenticated():
         // allow the sign-in / sign-up pages, otherwise force sign-in
-        return onAuthPages ? null : '/sign-in';
+        return onAuthPages ? null : withFrom(signIn);
 
       case Authenticated(:final userProfile):
         // signed in but no active profile yet — must pick one first
         if (userProfile == null) {
-          return loc == profileSelection ? null : profileSelection;
+          return onProfileSelection ? null : withFrom(profileSelection);
         }
-        // fully authed: only bounce off splash/auth pages into the app,
-        // otherwise allow the requested in-app route through
-        if (onSplash || onAuthPages) return '/posts';
+        // fully authed: leave any gate page, honoring the intended destination
+        if (onSplash || onAuthPages || onProfileSelection) {
+          return intended ?? '/posts';
+        }
         return null;
     }
   },

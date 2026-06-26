@@ -31,12 +31,12 @@ class ProfileSelectionPage extends StatelessWidget {
                 tileColor: Colors.grey,
                 title: Text(profile.name),
                 onTap: () async {
-                  // Set the selected profile in the AuthCubit and ProfileSelectionCubit
+                  // Set the active profile. The router's redirect reacts to
+                  // this state change and routes to /posts (or the preserved
+                  // deep-link destination).
                   context.read<AuthCubit>().setActiveProfile(profile);
                   // Notify the ProfileSelectionCubit about the selected profile.
                   unawaited(context.read<ProfileSelectionCubit>().selectProfile(profile));
-
-                  const PostsRoute().pushReplacement(context);
                 },
               );
             },

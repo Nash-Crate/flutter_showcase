@@ -43,9 +43,12 @@ class App extends StatelessWidget {
                     return BlocListener<LinksCubit, LinksState>(
                       listener: (context, state) {
                         if (state is NewLinkCaptured) {
-                          // TODO(handle): handle the links
-                          logger.i('LinksCubit: Initialized links: ${state.link}');
-                          showInfoNotification('New Link Captured: ${state.link}');
+                          final location = DeepLinkResolver.toLocation(state.link);
+                          logger.i('LinksCubit: captured "${state.link}" -> $location');
+                          // The router's redirect handles auth-gating; an
+                          // unauthenticated user is sent to sign-in with this
+                          // location preserved as `?from=`.
+                          if (location != null) appRouter.go(location);
                         }
                       },
                       child: child,
